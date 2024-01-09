@@ -1,4 +1,5 @@
 <?php
+global $link;
 require_once 'config.php';
 
 $name = $address = $salary="";
@@ -74,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
                         <h2>Create Record</h2>
                     </div>
                     <p>Please fill this form and submit to add employee record to the database</p>
-                    <form action="<?php echo htmlspecialchars($SEVER["PHP SELF"]);?>" method="post">
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
                         <div class="form-group <?php echo (!empty($name_err)) ? 'has-error' : ''; ?>">
                             <label>Name</label>
                             <input type="text" name="name" class="form-control" value="<?php echo $name; ?>">

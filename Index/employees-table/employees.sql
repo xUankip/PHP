@@ -1,6 +1,8 @@
 
 CREATE DATABASE employees;
+
 USE employees;
+
 DROP TABLE employees;
 CREATE TABLE IF NOT EXISTS `employees`(
     id int(11) NOT NULL AUTO_INCREMENT,

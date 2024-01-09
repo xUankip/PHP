@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -34,6 +34,7 @@
                     <a href="create.php" class="btn btn-success pull-right">Add New Employee</a>
                 </div>
                 <?php
+                global$link;
                 require_once 'config.php';
                 $sql = "SELECT * FROM employees";
                 if ($result = mysqli_query($link, $sql)){
@@ -56,9 +57,9 @@
                                 echo "<td>".$row['address']."</td>";
                                 echo "<td>".$row['salary']."</td>";
                             echo "<td>";
-                                echo "<a href='read.php?id='".$row['id']."'title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
-                                echo "<a href='update.php?id='".$row['id']."'title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
-                                echo "<a href='delete.php?id='".$row['id']."'title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
+                            echo "<a href='read.php?id=".$row['id']."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
+                            echo "<a href='update.php?id=".$row['id']."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+                            echo "<a href='delete.php?id=".$row['id']."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
                             echo "</td>";
                             echo "</tr>";
                         }
@@ -66,7 +67,7 @@
                     echo "</table>";
                     mysqli_free_result($result);
                     }else{
-                        echo "<p class='leead'> <em>No Record Were Found</em></p>";
+                        echo "<p class='lead'> <em>No Record Were Found</em></p>";
                     }
                 } else{
                     echo "ERROR : Could not able to execute $sql.".mysqli_error($link);

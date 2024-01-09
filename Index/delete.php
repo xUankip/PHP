@@ -1,14 +1,22 @@
 <?php
-if (isset($POST["id"]) && !empty($POST["id"])){
+global $link;
+if (!empty($_POST["id"])){
     require_once 'config.php';
+
     $sql = "DELETE FROM employees WHERE id = ?";
+
     if ($stmt = mysqli_prepare($link, $sql)){
+
         mysqli_stmt_bind_param($stmt, "i", $param_id);
-        $param_id = trim($POST["id"]);
+
+        $param_id = trim($_POST["id"]);
+
         if (mysqli_stmt_execute($stmt)){
+
             header("location: index.php");
             exit();
         }else{
+
             echo "Oops something went wrong, please try again later";
 
         }
@@ -16,7 +24,7 @@ if (isset($POST["id"]) && !empty($POST["id"])){
     mysqli_stmt_close($stmt);
     mysqli_close($link);
 }else{
-    if(empty(trim($_GET["id"]))){
+    if(empty(trim($_GET['id']))){
         header("location: error.php");
         exit();
     }
@@ -27,8 +35,8 @@ if (isset($POST["id"]) && !empty($POST["id"])){
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-    <style type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
+    <style>
         .wrapper{
             width: 500px;
             margin: 0 auto;

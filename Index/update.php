@@ -1,30 +1,31 @@
 <?php
+global $link;
 require_once 'config.php';
 
 $name = $address = $salary = "";
 $name_err = $address_err = $salary_err = "";
 
-if (isset($POST["id"]) && !empty($POST["id"])){
+if(isset($_POST["id"])&& !empty($_POST["id"])){
 
-    $id = $POST["id"];
+    $id = $_POST["id"];
 
-    $input_name = trim($POST{"name"});
+    $input_name = trim($_POST["name"]);
     if (empty($input_name)){
         $name_err = "Please enter a name.";
-    }elseif (!filter_var(trim($POST["name"]), FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z'.\s ]+$/")))){
+    }elseif (!filter_var(trim($_POST["name"]), FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z'.\s ]+$/")))){
         $name_err = 'Please enter a valid name';
     } else{
         $name=$input_name;
     }
 
-    $input_address = trim($POST["address"]);
+    $input_address = trim($_POST["address"]);
     if (empty($input_address)){
         $address_err = "Please enter an address";
     } else{
         $address = $input_address;
     }
 
-    $input_salary = trim($POST["salary"]);
+    $input_salary = trim($_POST["salary"]);
     if (empty($input_salary)){
         $salary_err = "Please enter the salary amount";
     }elseif(!ctype_digit($input_salary)){
@@ -41,7 +42,7 @@ if (isset($POST["id"]) && !empty($POST["id"])){
 
             $param_name=$name;
             $param_address = $address;
-            $param_salary = $salary;;
+            $param_salary = $salary;
             if (mysqli_stmt_execute($stmt)){
                 header("location:index.php");
                 exit();
@@ -90,7 +91,7 @@ if (isset($POST["id"]) && !empty($POST["id"])){
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <style type="text/css">
         .wrapper{
             width: 500px;
@@ -108,20 +109,26 @@ if (isset($POST["id"]) && !empty($POST["id"])){
                     <h2>Update Record</h2>
                 </div>
                 <p>Please edit tje input values and submit to update the record</p>
-                <form action="<?php echo htmlspecialchars(basename($SEVER['REQUEST_URI']));?>" method="post">
+                <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI']));?>" method="post">
                     <div class="form-group <?php echo (!empty($name_err)) ? 'has-error' : ''; ?>">
                         <label>Name</label>
-                        <input type="text" name="name" class="form-control" value="<?php echo $name; ?>">
+                        <label>
+                            <input type="text" name="name" class="form-control" value="<?php echo $name; ?>">
+                        </label>
                         <span class="help-block"><?php echo $name_err?></span>
                     </div>
                     <div class="form-group <?php echo (!empty($address_err))? 'has-error' : '';?>">
                         <label>Address</label>
-                        <textarea name="address" class="form-control"><?php echo $address;?></textarea>
+                        <label>
+                            <textarea name="address" class="form-control"><?php echo $address;?></textarea>
+                        </label>
                         <span class="help-block"><?php echo $address_err;?></span>
                     </div>
                     <div class="form-group <?php echo (!empty($salary_err))? 'has-error': '';?>">
                         <label>Salary</label>
-                        <input type="text" name="salary" class="form-control" value="<?php echo $salary;?>">
+                        <label>
+                            <input type="text" name="salary" class="form-control" value="<?php echo $salary;?>">
+                        </label>
                         <span class="help-block"><?php echo $salary_err;?></span>
                     </div>
                     <input type="hidden" name="id" value="<?php echo $id;?>"/>
